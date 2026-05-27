@@ -1,0 +1,22 @@
+# Refer https://docs.halo.run/developer-guide/plugin/basics/manifest
+
+apiVersion: plugin.halo.run/v1alpha1
+kind: Plugin
+metadata:
+  # The name defines how the plugin is invoked, A unique name
+  name: permission
+spec:
+  enabled: true
+  requires: ">=2.23.0"
+  author:
+    name: haoshenqi
+    website: https://github.com/haoshenqi
+  logo: logo.png
+  homepage: https://github.com/haoshenqi/permission#readme
+  repo: https://github.com/haoshenqi/permission
+  issues: https://github.com/haoshenqi/permission/issues
+  displayName: "文章访问权限控制"
+  description: "为文章增加公开、登录可见、仅作者可见三种前台访问权限。"
+  license:
+    - name: "GPL-3.0"
+      url: "https://github.com/haoshenqi/permission/blob/main/LICENSE"

@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: permission-post-access
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Post
+  formSchema:
+    - $formkit: "select"
+      name: "permission.haoshenqi.com/access"
+      label: "访问权限"
+      value: "PUBLIC"
+      options:
+        - label: "公开（任何人可见）"
+          value: "PUBLIC"
+        - label: "普通（登录可见）"
+          value: "NORMAL"
+        - label: "私有（仅自己可见）"
+          value: "PRIVATE"
