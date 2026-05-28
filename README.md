@@ -1,10 +1,12 @@
-# Halo 文章访问权限控制插件
+# Halo 文章访问控制插件
+
+English: Halo Post Access Control
 
 为 Halo 文章增加前台访问权限控制。
 
 ## 简介
 
-插件会在 Console 的文章列表操作菜单中新增“访问权限”，支持：
+Halo Post Access Control 会在 Console 的文章列表操作菜单中新增“访问权限”，支持：
 
 - 公开：任何人可见
 - 普通：登录用户可见

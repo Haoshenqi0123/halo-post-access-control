@@ -3,7 +3,7 @@ plugins {
     id "com.github.node-gradle.node" version "7.1.0"
 }
 
-group 'com.haoshenqi.permission.ui'
+group 'com.haoshenqi.halopostaccesscontrol.ui'
 
 tasks.register('pnpmBuild', PnpmTask) {
     group = 'build'

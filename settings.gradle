@@ -3,5 +3,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'plugin-permission'
+rootProject.name = 'halo-post-access-control'
 include 'ui'

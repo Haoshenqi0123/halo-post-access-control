@@ -1,5 +1,5 @@
 import type { ListedPost } from '@halo-dev/api-client'
-import { VDropdownItem } from '@halo-dev/components'
+import { VDropdown, VDropdownItem } from '@halo-dev/components'
 import { definePlugin } from '@halo-dev/ui-shared'
 import axios from 'axios'
 import { markRaw } from 'vue'
@@ -43,28 +43,25 @@ export default definePlugin({
   components: {},
   routes: [],
   extensionPoints: {
-    'post:list-item:operation:create': () => [
-      {
-        priority: 30,
-        component: markRaw(VDropdownItem),
-        label: '访问权限',
-        visible: true,
-        permissions: [],
-        children: (['PUBLIC', 'NORMAL', 'PRIVATE'] as AccessPermission[]).map((permission) => ({
-          priority: 0,
-          component: markRaw(VDropdownItem),
-          label: (post?: ListedPost) =>
-            `${permissionLabels[permission]}${post && currentPermission(post) === permission ? '（当前）' : ''}`,
-          visible: true,
+    'post:list-item:operation:create': (post) => {
+      const current = currentPermission(post.value)
+      return [
+        {
+          priority: 30,
+          component: markRaw(VDropdown),
+          label: '访问权限',
           permissions: [],
-          action: async (post?: ListedPost) => {
-            if (!post) {
-              return
-            }
-            await updatePermission(post, permission)
-          },
-        })),
-      },
-    ],
+          children: (['PUBLIC', 'NORMAL', 'PRIVATE'] as AccessPermission[]).map((permission) => ({
+            priority: 0,
+            component: markRaw(VDropdownItem),
+            label: `${permissionLabels[permission]}${current === permission ? '（当前）' : ''}`,
+            permissions: [],
+            action: async () => {
+              await updatePermission(post.value, permission)
+            },
+          })),
+        },
+      ]
+    },
   },
 })

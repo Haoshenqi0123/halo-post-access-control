@@ -4,7 +4,7 @@ plugins {
     id "run.halo.plugin.devtools" version "0.6.2"
 }
 
-group 'com.haoshenqi.permission'
+group 'com.haoshenqi.halopostaccesscontrol'
 
 repositories {
     mavenCentral()
@@ -52,4 +52,3 @@ tasks.named('generatePluginComponentsIdx') {
 halo {
     version = '2.23'
 }
-
