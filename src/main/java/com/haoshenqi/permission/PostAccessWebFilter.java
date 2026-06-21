@@ -3,13 +3,13 @@ package com.haoshenqi.permission;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.Objects;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -17,10 +17,10 @@ import reactor.core.publisher.Mono;
 import run.halo.app.core.extension.content.Post;
 import run.halo.app.extension.ReactiveExtensionClient;
 import run.halo.app.infra.AnonymousUserConst;
-import run.halo.app.security.AdditionalWebFilter;
+import run.halo.app.security.AfterSecurityWebFilter;
 
 @Component
-public class PostAccessWebFilter implements AdditionalWebFilter {
+public class PostAccessWebFilter implements AfterSecurityWebFilter, Ordered {
 
     private final ReactiveExtensionClient client;
 
@@ -35,13 +35,12 @@ public class PostAccessWebFilter implements AdditionalWebFilter {
         }
 
         return findPost(exchange)
-            .flatMap(post -> currentUsername()
+            .flatMap(post -> currentUsername(exchange)
                 .flatMap(username -> authorize(post, username))
                 .flatMap(allowed -> allowed ? chain.filter(exchange) : reject(exchange, post)))
             .switchIfEmpty(chain.filter(exchange));
     }
 
-    @Override
     public int getOrder() {
         return Ordered.LOWEST_PRECEDENCE - 100;
     }
@@ -109,13 +108,16 @@ public class PostAccessWebFilter implements AdditionalWebFilter {
         }
     }
 
-    private Mono<String> currentUsername() {
-        return ReactiveSecurityContextHolder.getContext()
-            .map(context -> context.getAuthentication())
-            .filter(Authentication::isAuthenticated)
-            .map(Authentication::getName)
+    private Mono<String> currentUsername(ServerWebExchange exchange) {
+        return exchange.getPrincipal()
+            .filter(this::isAuthenticated)
+            .map(Principal::getName)
             .filter(username -> !AnonymousUserConst.isAnonymousUser(username))
             .defaultIfEmpty("");
+    }
+
+    private boolean isAuthenticated(Principal principal) {
+        return !(principal instanceof Authentication authentication) || authentication.isAuthenticated();
     }
 
     private Mono<Boolean> authorize(Post post, String username) {

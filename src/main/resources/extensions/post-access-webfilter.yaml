@@ -4,6 +4,6 @@ metadata:
   name: permission-post-access-webfilter
 spec:
   className: com.haoshenqi.permission.PostAccessWebFilter
-  extensionPointName: additional-webfilter
+  extensionPointName: after-security-webfilter
   displayName: "Post access permission web filter"
   description: "Restrict theme-side post access by post metadata annotations."
