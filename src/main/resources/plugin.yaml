@@ -16,7 +16,7 @@ spec:
   repo: https://github.com/haoshenqi/halo-post-access-control
   issues: https://github.com/haoshenqi/halo-post-access-control/issues
   displayName: "Halo 文章访问控制插件"
-  description: "为文章增加公开、登录可见、仅作者可见三种前台访问权限。"
+  description: "为文章增加公开、登录可见、仅作者可见三种前台访问权限，默认登录可见。"
   license:
     - name: "GPL-3.0"
       url: "https://github.com/haoshenqi/halo-post-access-control/blob/main/LICENSE"

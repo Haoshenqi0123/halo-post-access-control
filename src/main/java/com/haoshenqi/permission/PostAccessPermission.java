@@ -14,23 +14,24 @@ public enum PostAccessPermission {
 
     public static PostAccessPermission from(Post post) {
         if (post == null || post.getMetadata() == null) {
-            return PUBLIC;
+            return NORMAL;
         }
         Map<String, String> annotations = post.getMetadata().getAnnotations();
         if (annotations == null) {
-            return PUBLIC;
+            return NORMAL;
         }
         return from(annotations.get(ANNOTATION_KEY));
     }
 
     public static PostAccessPermission from(String value) {
         if (value == null || value.isBlank()) {
-            return PUBLIC;
+            return NORMAL;
         }
         return switch (value.trim().toUpperCase(Locale.ROOT)) {
+            case "PUBLIC" -> PUBLIC;
             case "NORMAL" -> NORMAL;
             case "PRIVATE" -> PRIVATE;
-            default -> PUBLIC;
+            default -> NORMAL;
         };
     }
 }

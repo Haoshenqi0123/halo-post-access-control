@@ -10,7 +10,7 @@ spec:
     - $formkit: "select"
       name: "permission.haoshenqi.com/access"
       label: "访问权限"
-      value: "PUBLIC"
+      value: "NORMAL"
       options:
         - label: "公开（任何人可见）"
           value: "PUBLIC"

@@ -16,10 +16,10 @@ const permissionLabels: Record<AccessPermission, string> = {
 
 function currentPermission(post: ListedPost): AccessPermission {
   const value = post.post.metadata.annotations?.[ACCESS_ANNOTATION]
-  if (value === 'NORMAL' || value === 'PRIVATE') {
+  if (value === 'PUBLIC' || value === 'NORMAL' || value === 'PRIVATE') {
     return value
   }
-  return 'PUBLIC'
+  return 'NORMAL'
 }
 
 async function updatePermission(post: ListedPost, permission: AccessPermission) {
